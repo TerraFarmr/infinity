@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Stage, Layer } from "react-konva";
 import Cell from "../atoms/Cell.jsx";
+import FPSStats from "react-fps-stats";
 
 const CellularAutomata = ({ grid, setGrid, gameProps, theme, setPaused }) => {
   const { population, cellResolution, generationsPerSecond } = gameProps;
@@ -39,6 +40,7 @@ const CellularAutomata = ({ grid, setGrid, gameProps, theme, setPaused }) => {
           })}
         </Layer>
       </Stage>
+      <FPSStats />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { Rect } from "react-konva";
 import Konva from "konva";
 
-const Cell = ({ colIndex, rowIndex, cellResolution, size, color }) => {
+const Cell = ({ colIndex, rowIndex, cellResolution, size, color, theme }) => {
   // const rectRef = useRef(null);
 
   // const changeSize = useCallback(() => {

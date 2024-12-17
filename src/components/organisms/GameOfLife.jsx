@@ -5,13 +5,8 @@ import {
 } from "../../utils/calculate.gol.js";
 import CellularAutomata from "../molecules/CellularAutomata.jsx";
 
-const GameOfLife = () => {
-  const gameProps = {
-    population: 15,
-    cellResolution: 15,
-    generationsPerSecond: 200,
-  };
-  const { population, cellResolution, generationsPerSecond } = gameProps;
+const GameOfLife = (gameProps) => {
+  let { population, cellResolution, generationsPerSecond, theme } = gameProps;
   const gridProps = {
     rows: Math.ceil(window.innerHeight / cellResolution),
     columns: Math.ceil(window.innerWidth / cellResolution),
@@ -52,7 +47,7 @@ const GameOfLife = () => {
       grid={grid}
       setGrid={setGrid}
       gameProps={gameProps}
-      theme="dark"
+      theme={theme}
       setPaused={setPaused}
     />
   );

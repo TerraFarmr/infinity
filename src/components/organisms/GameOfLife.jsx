@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import StatsImpl from "stats.js";
+import { genCounter, showControlPanel } from "../../utils/profiler.gol.js";
+import CellularAutomata from "../molecules/CellularAutomata.jsx";
 import {
   calculateNextGeneration,
   createGrid,
 } from "../../utils/calculate.gol.js";
-import CellularAutomata from "../molecules/CellularAutomata.jsx";
 
 const GameOfLife = (gameProps) => {
-  let { population, cellResolution, generationsPerSecond, theme } = gameProps;
+  let { population, cellResolution, generationsPerSecond, theme, devMode } =
+    gameProps;
   const gridProps = {
     rows: Math.ceil(window.innerHeight / cellResolution),
     columns: Math.ceil(window.innerWidth / cellResolution),
@@ -14,29 +17,27 @@ const GameOfLife = (gameProps) => {
 
   const [grid, setGrid] = useState();
   const [paused, setPaused] = useState(true);
-  //   const [genTstamps, setgenTstamps] = useState([]);
+  const [genTstamps, setgenTstamps] = useState([]);
+  const [stats] = useState(() => new StatsImpl());
+
+  useEffect(() => {
+    if (devMode) showControlPanel(stats);
+  }, []);
 
   useEffect(
     () => setGrid(createGrid(gridProps.rows, gridProps.columns, population)),
-    []
+    [population, cellResolution]
   );
-  const handleGridChange = (grid) => {}; // drawGrid(grid, canvasRef, gameProps)
 
   useEffect(() => {
     if (paused) return;
     const interval = setInterval(() => {
-      setGrid((grid) => calculateNextGeneration(grid));
-      handleGridChange(grid);
 
-      //Profile perfomance of GOL engine
-      //   setgenTstamps((timestamps) => [...timestamps, Date.now()]);
-      //   if (genTstamps?.length % 100 === 0)
-      //     console.log(
-      //       `Time taken for 100 Gens: ${
-      //         genTstamps[genTstamps.length - 1] -
-      //         genTstamps[genTstamps.length - 100]
-      //       }ms`
-      //     );
+      //Update Grid
+      if (devMode) genCounter(setgenTstamps);
+      if (devMode) stats.begin();
+      setGrid((grid) => calculateNextGeneration(grid));
+      if (devMode) stats.end();
     }, 1000 / generationsPerSecond);
 
     return () => clearInterval(interval);

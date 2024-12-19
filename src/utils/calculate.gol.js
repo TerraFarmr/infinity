@@ -1,47 +1,80 @@
 import logo from "../assets/logo.js";
+import * as organisms from "../assets/organisms.js";
 
+const  chooseOrganisms = (numOrganisms) => {
+  const organismKeys = Object.keys(organisms);
+  const randomOrganisms = [];
+  for (let i = 0; i < numOrganisms; i++) {
+    const randomIndex = Math.floor(Math.random() * organismKeys.length);
+    randomOrganisms.push(organisms[organismKeys[randomIndex]]);
+  }
+  return randomOrganisms;
+}
 
-const insertCustomOrganism = (grid, organism) => {
-    const gridRows = grid.length;
-    const gridCols = grid[0].length;
-    const orgRows = organism.length;
-    const orgCols = organism[0].length;
+function populateGrid(grid, organisms, banner) {
+    function placeLogoInGrid(grid, banner) {
+        const gridRows = grid.length;
+        const gridCols = grid[0].length;
+        const bannerRows = banner.length;
+        const bannerCols = banner[0].length;
 
-    const startRow = Math.floor((gridRows - orgRows) / 2);
-    const startCol = Math.floor((gridCols - orgCols) / 2);
-
-    for (let i = 0; i < orgRows; i++) {
-        for (let j = 0; j < orgCols; j++) {
-            grid[startRow + i][startCol + j] = organism[i][j];
+        // Ensure the grid is large enough to fit the logo
+        if (bannerRows > gridRows || bannerCols > gridCols) {
+          console.error('Logo is larger than the grid. Cannot place logo.');
+          return grid;
         }
-    }
 
-    return grid;
-};
+        const startRow = Math.floor((gridRows - bannerRows) / 2);
+        const startCol = Math.floor((gridCols - bannerCols) / 2);
 
+        for (let i = 0; i < bannerRows; i++) {
+          for (let j = 0; j < bannerCols; j++) {
+            if (grid[startRow + i] && grid[startRow + i][startCol + j] !== undefined) {
+              grid[startRow + i][startCol + j] = banner[i][j];
+            }
+          }
+        }
+
+        return grid;
+      }
+      
+    const rows = grid.length;
+    const cols = grid[0].length;
+    organisms.forEach(organism => {
+        const orgRows = organism.length;
+        const orgCols = organism[0].length;
+        const startX = Math.floor(Math.random() * (rows - orgRows));
+        const startY = Math.floor(Math.random() * (cols - orgCols));
+
+        for (let i = 0; i < orgRows; i++) {
+            for (let j = 0; j < orgCols; j++) {
+                grid[startX + i][startY + j] = organism[i][j];
+            }
+        }
+    });
+    return placeLogoInGrid(grid,banner)
+}
 
 const createGrid = (rows, columns, population) => {
     const initialGrid = Array.from({ length: rows }, () => Array(columns).fill(0));
-    const populateGrid = (grid, population) =>
-        grid.map((row) =>
-            row.map(() => Math.random() < population / 100 ? 1 : 0)
-        );
-    return  insertCustomOrganism(populateGrid(initialGrid, population), logo);
+    return populateGrid(initialGrid, chooseOrganisms(population), logo);
 };
 
-const countNeighbours = (grid, col, row) => {
-    let count = 0;
-    for (let i = col - 1; i <= col + 1; i++) {
-        for (let j = row - 1; j <= row + 1; j++) {
-            if (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length) {
-                if (grid[i][j] === 1 && !(i === col && j === row)) count++;
-            }
-        }
-    }
-    return count;
-};
 
 const calculateNextGeneration = (grid)=> {
+
+    const countNeighbours = (grid, col, row) => {
+        let count = 0;
+        for (let i = col - 1; i <= col + 1; i++) {
+            for (let j = row - 1; j <= row + 1; j++) {
+                if (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length) {
+                    if (grid[i][j] === 1 && !(i === col && j === row)) count++;
+                }
+            }
+        }
+        return count;
+    };
+
     return grid?.map((row, x) =>
         row.map((cell, y) => {
             if (x === 0 || y === 0 || x === grid.length - 1 || y === row.length - 1) {
@@ -61,17 +94,7 @@ const calculateNextGeneration = (grid)=> {
     );
 };
 
-function addCellsToGrid(grid, x, y) {
-    // Ensure the coordinates are within the grid bounds
-    if (x >= 0 && x < grid.length && y >= 0 && y < grid[0].length) {
-        // Toggle the cell state (assuming 0 is dead and 1 is alive)
-        grid[x][y] = grid[x][y] === 0 ? 1 : 0;
-    }
-    return grid;
-}
-
 export {
     createGrid,
     calculateNextGeneration,
-    addCellsToGrid,
 }

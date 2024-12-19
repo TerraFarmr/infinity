@@ -18,7 +18,8 @@
     "konva": "^9.3.16",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-fps-stats": "^0.3.1",
-    "react-konva": "^19.0.1"
+    "react-konva": "^19.0.1",
+    "stats.js": "^0.17.0",
+    "dat.gui": "^0.7.9"
   }
 }

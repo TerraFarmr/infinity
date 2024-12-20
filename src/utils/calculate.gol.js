@@ -97,4 +97,5 @@ const calculateNextGeneration = (grid)=> {
 export {
     createGrid,
     calculateNextGeneration,
+    chooseOrganisms
 }

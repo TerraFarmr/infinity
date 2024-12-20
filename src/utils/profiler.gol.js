@@ -1,5 +1,6 @@
 import * as dat from "dat.gui";
 
+
 const genCounter = (setTimeStamps) => {
     //Profile perfomance of GOL engine
     setTimeStamps((timeStamps) =>
@@ -10,25 +11,19 @@ const genCounter = (setTimeStamps) => {
                 timeStamps[timeStamps?.length - 100]
               }ms`);
        return [...timeStamps, Date.now()]
-    }
-         
-);
-    
-    }
+    }      
+  );
+}
 
-function addSettingsPane(settings, setSettings, excludeKeys = []) {
+function addSettingsPane(settings, updateRedux, excludeKeys = []) {
   const gui = new dat.GUI();
   Object.keys(settings).forEach(key => {
     if (excludeKeys.includes(key)) return; // Skip excluded keys
     const value = settings[key];
     if (typeof value === 'number') {
-      gui.add(settings, key, 0, value * 2).onChange(value =>
-        setSettings(prev => ({ ...prev, [key]: value }))
-      );
+      gui.add(settings, key, 0, value * 2).onChange((value) => updateRedux(key, value));
     } else {
-      gui.add(settings, key).onChange(value =>
-        setSettings(prev => ({ ...prev, [key]: value }))
-      );
+      gui.add(settings, key).onChange((value) => updateRedux(key, value));
     }
   });
 }

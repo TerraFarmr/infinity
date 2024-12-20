@@ -24,4 +24,6 @@ pnpm-debug.log*
 .idea/
 
 #lock file
-.package-lock.json
+package-lock.json
+deno.lock
+yarn.lock

@@ -1,28 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Provider } from "react-redux";
 import GameOfLife from "../components/organisms/GameOfLife.jsx";
-import { addSettingsPane, devModeMonitor } from "../utils/profiler.gol.js";
+import { devModeMonitor } from "../utils/profiler.gol.js";
+import store from "../redux/store";
 
 const App = () => {
   const devMode = devModeMonitor();
-  const [settings, setSettings] = useState({
-    population: 25,
-    cellResolution: 10,
-    generationsPerSecond: 25,
-    dark: true,
-  });
-
-  useEffect(() => {
-    if (devMode) addSettingsPane(settings, setSettings);
-  }, []);
 
   return (
-    <GameOfLife
-      population={settings.population}
-      cellResolution={settings.cellResolution}
-      generationsPerSecond={settings.generationsPerSecond}
-      theme={settings.dark ? "dark" : "light"}
-      devMode={devMode}
-    />
+    <Provider store={store}>
+      <GameOfLife devMode={devMode} />
+    </Provider>
   );
 };
 

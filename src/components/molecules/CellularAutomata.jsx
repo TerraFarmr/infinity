@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Stage, Layer } from "react-konva";
+import { Stage, Layer, Rect } from "react-konva";
 import Cell from "../atoms/Cell.jsx";
+import { togglePause } from "../../redux/gamePropSlice.js";
+import { useSelector, useDispatch } from "react-redux";
 
-const CellularAutomata = ({ grid, setGrid, gameProps, theme, setPaused }) => {
-  const { population, cellResolution, generationsPerSecond } = gameProps;
-  const click = () => setPaused((paused) => !paused);
+const CellularAutomata = ({ grid, setGrid, theme }) => {
+  const dispatch = useDispatch();
+  const click = () => {
+    dispatch(togglePause());
+  };
+  const { cellResolution } = useSelector((state) => state.gameProps);
 
   const spectrum = {
     start: theme === "dark" ? "#000000" : "#ffffff",
@@ -25,14 +30,16 @@ const CellularAutomata = ({ grid, setGrid, gameProps, theme, setPaused }) => {
         <Layer>
           {grid?.map((row, rowIndex) => {
             return row.map((cell, colIndex) => {
+              const alive = cell === 1;
+              const size = alive ? cellResolution : 1;
               return (
                 <Cell
                   cellResolution={cellResolution}
-                  size={cell === 1 ? cellResolution : 1}
-                  color={spectrum.end}
-                  rowIndex={rowIndex}
                   colIndex={colIndex}
-                  key={rowIndex + colIndex}
+                  rowIndex={rowIndex}
+                  spectrum={spectrum}
+                  alive={alive}
+                  setGrid={setGrid}
                 />
               );
             });

@@ -27,3 +27,4 @@ pnpm-debug.log*
 package-lock.json
 deno.lock
 yarn.lock
+bun.lock

@@ -9,22 +9,22 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.2",
     "@astrojs/react": "^4.1.0",
+    "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.5.0",
+    "@tailwindcss/vite": "^4.1.7",
     "@types/react-dom": "^19.0.2",
     "astro": "^5.0.5",
-    "gsap": "^3.12.5",
+    "dat.gui": "^0.7.9",
     "konva": "^9.3.16",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-konva": "^19.0.1",
     "react-redux": "^9.2.0",
-    "stats.js": "^0.17.0",
-    "dat.gui": "^0.7.9"
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
-    "@types/gsap": "^1.20.2",
+    "@types/dat.gui": "^0.7.13",
     "@types/react": "^19.0.2",
     "@types/redux": "^3.6.31",
     "typescript": "^5.7.2"

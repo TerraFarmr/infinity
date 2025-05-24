@@ -1,7 +1,6 @@
 ---
-import App from "../templates/app";
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Infinity from "../components/templates/app";
+import "../styles/global.css";
 ---
 
 <!doctype html>
@@ -11,10 +10,10 @@ import App from "../templates/app";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Harish.Tech</title>
+    <title>∞ Infinity</title>
   </head>
   <body>
-    <App client:only />
+    <Infinity client:only />
   </body>
 </html>
 

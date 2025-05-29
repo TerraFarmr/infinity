@@ -10,7 +10,7 @@ const Toolbar: React.FC = () => {
 
   // Toggle between draw and view modes
   const toggleMode = () => dispatch(setMode(mode === 'view' ? 'draw' : 'view'));
-  
+
   // Toggle dark/light theme
   const toggleTheme = () => dispatch(toggleDarkMode());
 
@@ -19,17 +19,17 @@ const Toolbar: React.FC = () => {
       <button
         onClick={toggleMode}
         className={`px-4 py-2 text-white border-none rounded ${
-          isDarkMode 
-            ? 'bg-zinc-300 hover:bg-zinc-700 text-zinc-900 hover:text-zinc-300' 
+          isDarkMode
+            ? 'bg-zinc-300 hover:bg-zinc-700 text-zinc-900 hover:text-zinc-300'
             : 'bg-zinc-900 hover:bg-zinc-300 text-zinc-300 hover:text-zinc-900'
         }`}
       >
-        {mode === 'draw' ? 'Switch to View' : 'Switch to Draw'}
+        {mode === 'draw' ? '⌘+V - Switch to View ' : '⌘+D - Switch to Draw'}
       </button>
 
       <button onClick={toggleTheme} className="px-4 py-2 border-none rounded">
-        {isDarkMode 
-          ? <SunIcon className="w-5 h-5 text-zinc-300" /> 
+        {isDarkMode
+          ? <SunIcon className="w-5 h-5 text-zinc-300" />
           : <MoonIcon className="w-5 h-5" />
         }
       </button>

@@ -1,5 +1,3 @@
-import type { KonvaEventObject } from 'konva/lib/Node';
-
 // Rectangle shape properties
 export interface Rectangle {
   id: string;      // Unique identifier

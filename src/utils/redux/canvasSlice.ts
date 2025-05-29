@@ -1,8 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import { generateId } from '../helpers';
 import type { CanvasMode, Rectangle } from '../types/canvas.types';
 import type { CanvasState, RootState } from '../types/redux.types';
-import { generateId } from '../helpers';
 
 // Initial canvas state
 const initialState: CanvasState = {
@@ -29,7 +29,8 @@ export const canvasSlice = createSlice({
         state.rectangles[index] = { ...state.rectangles[index], ...action.payload };
       }
     },
-    selectRectangle: (state, action: PayloadAction<string | null>) => { state.selectedId = action.payload },
+    selectRectangle: (state, action: PayloadAction<string | null>) => { state.selectedId = action.payload},
+    deselectRectangle: (state) => { state.selectedId = null},
 
     // Mode operations
     setMode: (state, action: PayloadAction<CanvasMode>) => {
@@ -65,6 +66,7 @@ export const {
   toggleMode,
   updateCanvas,
   selectRectangle,
+  deselectRectangle,
   toggleDarkMode
 } = canvasSlice.actions;
 
